@@ -68,7 +68,6 @@ module.exports = {
                 })
             })
             .catch(err => {
-              console.log('masuk error');
               res
                 .status(500)
                 .json({
@@ -104,11 +103,19 @@ module.exports = {
               phone
             })
             .then(updatedSupplier => {
-              res
-                .status(200)
-                .json({
-                  message: `Update Supplier ${updatedSupplier.name} Success`,
-                  updatedSupplier
+              Item
+                .updateMany({
+                  supplier: updatedSupplier.name
+                }, {
+                  supplier: name
+                })
+                .then(itemsUpdated => {
+                  res
+                    .status(200)
+                    .json({
+                      message: `Update Supplier ${updatedSupplier.name} Success`,
+                      itemsUpdated
+                    })
                 })
             })
             .catch(err => {
